@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Python
+        run: |
+          python -m py_compile server.py make_cert.py migrate_files_to_storage.py
+          python test_server_logic.py
+
+      - name: JavaScript lint
+        run: npx --yes eslint@8 js assets
+
+      - name: Smoke test
+        run: |
+          python server.py 8000 > server.log 2>&1 &
+          for _ in $(seq 1 30); do curl -fs http://127.0.0.1:8000/ > /dev/null && break; sleep 0.5; done
+          curl -fs http://127.0.0.1:8000/ | grep -q "<title>Vectis</title>"
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8000/api/db)" = 401
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8000/server.py)" = 404
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8000/render.yaml)" = 404
+
+      - name: Server log
+        if: failure()
+        run: cat server.log
