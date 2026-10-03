@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Saiharshith007/vectis/actions/workflows/ci.yml"><img src="https://github.com/Saiharshith007/vectis/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/Saiharshith007/vectis-erp/actions/workflows/ci.yml"><img src="https://github.com/Saiharshith007/vectis-erp/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="MIT license"></a>
   <img src="https://img.shields.io/badge/python-3.11-blue.svg" alt="Python 3.11">
   <img src="https://img.shields.io/badge/build_step-none-lightgrey.svg" alt="No build step">
@@ -66,8 +66,8 @@ The screenshots use made-up demo data.
 You need Python 3.11 or newer. Nothing else to install.
 
 ```bash
-git clone https://github.com/Saiharshith007/vectis.git
-cd vectis
+git clone https://github.com/Saiharshith007/vectis-erp.git
+cd vectis-erp
 python server.py
 ```
 

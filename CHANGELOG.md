@@ -25,5 +25,5 @@ First public release.
 - JSON-file storage out of the box; PostgreSQL and Supabase Storage for hosted
   setups
 
-[Unreleased]: https://github.com/Saiharshith007/vectis/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/Saiharshith007/vectis/releases/tag/v1.0.0
+[Unreleased]: https://github.com/Saiharshith007/vectis-erp/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/Saiharshith007/vectis-erp/releases/tag/v1.0.0
