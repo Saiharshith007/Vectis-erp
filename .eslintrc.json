@@ -1,0 +1,32 @@
+{
+  "root": true,
+  "env": { "browser": true, "es2022": true },
+  "parserOptions": { "ecmaVersion": "latest" },
+  "ignorePatterns": ["js/vendor/"],
+  "globals": {
+    "App": "readonly",
+    "Auth": "readonly",
+    "AuthUI": "readonly",
+    "LoginFX": "readonly",
+    "Storage": "readonly",
+    "PdfUtils": "readonly",
+    "FinanceUtils": "readonly",
+    "Dashboard": "readonly",
+    "Invoice": "readonly",
+    "Quotation": "readonly",
+    "PurchaseOrder": "readonly",
+    "PoReceived": "readonly",
+    "ProformaInvoice": "readonly",
+    "Receipts": "readonly",
+    "Sales": "readonly",
+    "Summary": "readonly",
+    "BulkImport": "readonly",
+    "jspdf": "readonly",
+    "jsPDF": "readonly",
+    "pdfjsLib": "readonly",
+    "XLSX": "readonly"
+  },
+  "rules": {
+    "no-undef": "error"
+  }
+}
