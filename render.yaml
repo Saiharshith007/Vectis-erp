@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: vectis
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python server.py
+    envVars:
+      - key: PORT
+        value: "10000"
+      - key: PYTHON_VERSION
+        value: "3.11.4"
+      # REQUIRED on Render: without a persistent Postgres, all data is written to
+      # local JSON on an ephemeral disk and WIPED on every redeploy. Set this in
+      # the Render dashboard (Environment) to your Postgres connection string.
+      - key: DATABASE_URL
+        sync: false
+      # Optional: store generated/uploaded PDFs in a Supabase bucket instead of
+      # bloating Postgres. Set all three (or leave unset to keep files in Postgres).
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
+      - key: SUPABASE_BUCKET
+        sync: false
+      # Change the admin's default password after first login; this only sets the
+      # login email. Leave as-is unless the admin address differs.
+      - key: VECTIS_ADMIN_EMAIL
+        sync: false

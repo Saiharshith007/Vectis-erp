@@ -1,0 +1,21 @@
+[Unit]
+Description=Vectis document server (Python app, localhost only)
+After=network.target
+
+[Service]
+Type=simple
+User=vectis
+Group=vectis
+WorkingDirectory=/opt/vectis
+# Bind to localhost — only Caddy (on the same machine) may reach the app.
+Environment=VECTIS_HOST=127.0.0.1
+Environment=VECTIS_PORT=8000
+ExecStart=/usr/bin/python3 /opt/vectis/server.py
+Restart=on-failure
+RestartSec=3
+# Light hardening
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
