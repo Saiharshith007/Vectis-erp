@@ -1,0 +1,33 @@
+# Caddy reverse proxy for Vectis.
+#
+# Caddy gets and renews a Let's Encrypt certificate for the domain below,
+# terminates HTTPS and forwards to the Python app on localhost. The
+# X-Forwarded-Proto header makes the app mark the session cookie Secure.
+#
+# 1. Replace vectis.example.com with your domain (DNS must point at this
+#    machine and ports 80/443 must be reachable).
+# 2. Run the app bound to localhost:  python server.py
+# 3. caddy run --config deploy/Caddyfile
+#    (on Ubuntu: copy this to /etc/caddy/Caddyfile)
+
+vectis.example.com {
+    encode gzip
+
+    reverse_proxy 127.0.0.1:8000 {
+        header_up X-Forwarded-Proto https
+    }
+
+    # Matches the app's 60 MB request limit.
+    request_body {
+        max_size 60MB
+    }
+}
+
+# Local HTTPS without a domain: comment out the block above and use this
+# instead (Caddy installs its own root CA on this machine).
+#
+# localhost {
+#     reverse_proxy 127.0.0.1:8000 {
+#         header_up X-Forwarded-Proto https
+#     }
+# }
