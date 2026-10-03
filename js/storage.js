@@ -1547,9 +1547,6 @@ const Storage = (() => {
                     PENDING_KEY,
                     ADMIN_PWD_KEY
                 ];
-                
-                const adminOnlyKeys = [SETTINGS_KEY, USERS_KEY, PENDING_KEY, ADMIN_PWD_KEY];
-                const isAdmin = typeof Auth !== 'undefined' && typeof Auth.isAdmin === 'function' && Auth.isAdmin();
 
                 for (const key of keys) {
                     if (serverDb[key] !== undefined && serverDb[key] !== null) {
@@ -1561,20 +1558,11 @@ const Storage = (() => {
                             console.warn('Failed to sync to localStorage:', e);
                         }
                     } else {
-                        // Server does not have this key yet. Try loading from localStorage to migrate
-                        if (adminOnlyKeys.includes(key) && !isAdmin) {
-                            continue;
-                        }
-                        const localVal = localStorage.getItem(key);
-                        if (localVal !== null) {
-                            try {
-                                _dbCache[key] = JSON.parse(localVal);
-                                // Upload this migrated data to the server
-                                await _saveToServer(key, _dbCache[key]);
-                            } catch (e) {
-                                console.error(`Error migrating local storage for key ${key}:`, e);
-                            }
-                        }
+                        // The server is the source of truth: a key it doesn't have is
+                        // empty. Drop any local copy rather than uploading it, so data
+                        // from an older install on this address (or from before db/
+                        // was reset) can't resurface in a fresh database.
+                        try { localStorage.removeItem(key); } catch (e) {}
                     }
                 }
                 _backfillIds();
