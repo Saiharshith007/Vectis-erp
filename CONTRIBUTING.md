@@ -6,8 +6,8 @@ features are all welcome.
 ## Getting set up
 
 ```bash
-git clone https://github.com/Saiharshith007/vectis.git
-cd vectis
+git clone https://github.com/Saiharshith007/vectis-erp.git
+cd vectis-erp
 python server.py
 ```
 
